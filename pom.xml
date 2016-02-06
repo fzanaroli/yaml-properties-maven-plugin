@@ -34,7 +34,7 @@
   <version>1.0.1-SNAPSHOT</version>
 
   <name>Properties Maven Plugin</name>
-  <description> 
+  <description>
     The Properties Maven Plugin is here to make life a little easier when dealing
     with properties. It provides goals to read and write properties from files.
   </description>
@@ -118,8 +118,19 @@
       <version>3.0.22</version>
     </dependency>
     <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>1.16</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
       <scope>test</scope>
     </dependency>
     <!-- dependencies to annotations -->
