@@ -21,8 +21,7 @@ package org.codehaus.mojo.properties;
 
 import java.util.Properties;
 
-class PropertyResolver
-{
+class PropertyResolver {
 
     /**
      * Retrieves a property value, replacing values like ${token} using the Properties to look them up. Shamelessly
@@ -32,48 +31,43 @@ class PropertyResolver
      * reparsing (in the case that the value of a property contains a key), and will not loop endlessly on a pair like
      * test = ${test}
      *
-     * @param key property key
-     * @param properties project properties
+     * @param key         property key
+     * @param properties  project properties
      * @param environment environment variables
      * @return resolved property value
      * @throws IllegalArgumentException when properties are circularly defined
      */
-    public String getPropertyValue( String key, Properties properties, Properties environment )
-    {
-        String value = properties.getProperty( key );
+    public String getPropertyValue(String key, Properties properties, Properties environment) {
+        String value = properties.getProperty(key);
 
-        ExpansionBuffer buffer = new ExpansionBuffer( value );
+        ExpansionBuffer buffer = new ExpansionBuffer(value);
 
         CircularDefinitionPreventer circularDefinitionPreventer =
-            new CircularDefinitionPreventer().visited( key, value );
+                new CircularDefinitionPreventer().visited(key, value);
 
-        while ( buffer.hasMoreLegalPlaceholders() )
-        {
+        while (buffer.hasMoreLegalPlaceholders()) {
             String newKey = buffer.extractPropertyKey();
-            String newValue = fromPropertiesThenSystemThenEnvironment( newKey, properties, environment );
+            String newValue = fromPropertiesThenSystemThenEnvironment(newKey, properties, environment);
 
-            circularDefinitionPreventer.visited( newKey, newValue );
+            circularDefinitionPreventer.visited(newKey, newValue);
 
-            buffer.add( newKey, newValue );
+            buffer.add(newKey, newValue);
         }
 
         return buffer.toString();
     }
 
-    private String fromPropertiesThenSystemThenEnvironment( String key, Properties properties, Properties environment )
-    {
-        String value = properties.getProperty( key );
+    private String fromPropertiesThenSystemThenEnvironment(String key, Properties properties, Properties environment) {
+        String value = properties.getProperty(key);
 
         // try global environment
-        if ( value == null )
-        {
-            value = System.getProperty( key );
+        if (value == null) {
+            value = System.getProperty(key);
         }
 
         // try environment variable
-        if ( value == null && key.startsWith( "env." ) && environment != null )
-        {
-            value = environment.getProperty( key.substring( 4 ) );
+        if (value == null && key.startsWith("env.") && environment != null) {
+            value = environment.getProperty(key.substring(4));
         }
 
         return value;

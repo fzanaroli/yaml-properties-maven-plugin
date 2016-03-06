@@ -1,4 +1,5 @@
 language: java
+sudo: false # faster builds
 jdk:
   - openjdk6
   - oraclejdk7
@@ -12,4 +13,4 @@ branches:
         - gh-pages
 notifications:
     email:
-        - khmarbaise@apache.org
+        - roberto.trunfio@gmail.com
