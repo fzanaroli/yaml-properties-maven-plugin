@@ -33,9 +33,9 @@
     <artifactId>yaml-properties-maven-plugin</artifactId>
     <version>1.1.2-SNAPSHOT</version>
 
-    <name>Properties Maven Plugin</name>
+    <name>Yaml Properties Maven Plugin</name>
     <description>
-        The Properties Maven Plugin is here to make life a little easier when dealing
+        The Yaml Properties Maven Plugin is here to make life a little easier when dealing
         with properties. It provides goals to read and write properties from files.
     </description>
 
