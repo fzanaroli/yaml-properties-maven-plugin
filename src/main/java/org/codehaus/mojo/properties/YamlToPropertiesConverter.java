@@ -51,7 +51,7 @@ class YamlToPropertiesConverter {
 
         final Map<String, String> propertiesMap = new LinkedHashMap<String, String>();
         for (final Map.Entry<String, Object> entry : flattenedMap.entrySet()) {
-            propertiesMap.put(entry.getKey(), (String) entry.getValue());
+            propertiesMap.put(entry.getKey(), String.valueOf(entry.getValue()));
         }
 
         return propertiesMap;
