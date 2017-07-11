@@ -71,10 +71,10 @@ class YamlToPropertiesConverter {
 
                 for (final Object element : ((Collection) value)) {
                     final Map<String, Object> elementMap = (Map<String, Object>) element;
-                    collection.add(toHierarchicalMap(elementMap));
+                    dataMap.put(key,toHierarchicalMap(elementMap));
                 }
 
-                dataMap.put(key, toHierarchicalMap(value));
+//                dataMap.put(key, toHierarchicalMap(collection.iterator().next()));
             } else {
                 dataMap.put(key, value);
             }

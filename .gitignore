@@ -2,3 +2,8 @@ target
 .settings
 .project
 .classpath
+
+*.iml
+
+## Directory-based project format:
+.idea/

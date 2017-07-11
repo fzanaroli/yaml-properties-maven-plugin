@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.1] - 2017-07-11
+### Fixed
+- Issue 3 https://github.com/ozimov/yaml-properties-maven-plugin/issues/3
+
 ## [1.1.1] - 2016-05-12
 ### Fixed
 - Class cast exception fixed
