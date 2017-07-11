@@ -67,14 +67,10 @@ class YamlToPropertiesConverter {
             if (value instanceof Map) {
                 dataMap.put(key, toHierarchicalMap(value));
             } else if (value instanceof Collection) {
-                final Collection<Map<String, Object>> collection = new LinkedList<Map<String, Object>>();
-
                 for (final Object element : ((Collection) value)) {
                     final Map<String, Object> elementMap = (Map<String, Object>) element;
                     dataMap.put(key,toHierarchicalMap(elementMap));
                 }
-
-//                dataMap.put(key, toHierarchicalMap(collection.iterator().next()));
             } else {
                 dataMap.put(key, value);
             }
