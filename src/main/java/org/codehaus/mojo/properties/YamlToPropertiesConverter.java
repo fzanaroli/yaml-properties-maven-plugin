@@ -63,20 +63,22 @@ class YamlToPropertiesConverter {
         for (final Map.Entry<String, Object> entry : ((Map<String, Object>) content).entrySet()) {
             final String key = entry.getKey();
             final Object value = entry.getValue();
-
-            if (value instanceof Map) {
-                dataMap.put(key, toHierarchicalMap(value));
-            } else if (value instanceof Collection) {
-                for (final Object element : ((Collection) value)) {
-                    final Map<String, Object> elementMap = (Map<String, Object>) element;
-                    dataMap.put(key,toHierarchicalMap(elementMap));
-                }
-            } else {
-                dataMap.put(key, value);
-            }
+            toHierarchicalValue(dataMap, key, value);
         }
 
         return dataMap;
+    }
+
+    private static void toHierarchicalValue(Map<String, Object> dataMap, String key, Object value) {
+        if (value instanceof Map) {
+            dataMap.put(key, toHierarchicalMap(value));
+        } else if (value instanceof Collection) {
+            for (final Object element : ((Collection) value)) {
+                toHierarchicalValue(dataMap,key,element);
+            }
+        } else {
+            dataMap.put(key, value);
+        }
     }
 
     private static Map<String, Object> toFlatMap(final Map<String, Object> source) {
