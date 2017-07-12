@@ -28,3 +28,36 @@ with:
 <artifactId>yaml-properties-maven-plugin</artifactId>
 <version>1.1.1</version>
 ```
+
+## Example of usage:
+```xml
+<plugin>
+    <groupId>it.ozimov</groupId>
+    <artifactId>yaml-properties-maven-plugin</artifactId>
+    <version>LATES</version>
+    <executions>
+        <execution>
+            <phase>initialize</phase>
+            <goals>
+                <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+                <files>
+                    <file>config/my_configuration.yaml</file>
+                </files>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+And then usage in the pom as 
+```xml
+ <plugin>
+    <groupId>some groupId</groupId>
+    <artifactId>some artifactId</artifactId>
+    <version>X.Y.Z</version>
+    <configuration>
+        <cfg_1>${my_yaml_key}</cfg_1>
+    </configuration>
+</plugin>
+```
