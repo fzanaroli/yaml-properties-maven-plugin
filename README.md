@@ -13,7 +13,7 @@
 This extension provides capability to import content from a yaml file into your pom.
 To this end, you should read the instructions for the [properties-maven-plugin](http://www.mojohaus.org/properties-maven-plugin/).
 
-Just rememeber that current release is **version 1.1.1**. To use it in Maven, replace the following code
+Just rememeber that current release is **version 1.1.2**. To use it in Maven, replace the following code
 
 ```xml
 <groupId>org.codehaus.mojo</groupId>
@@ -26,7 +26,7 @@ with:
 ```xml
 <groupId>it.ozimov</groupId>
 <artifactId>yaml-properties-maven-plugin</artifactId>
-<version>1.1.1</version>
+<version>1.1.2</version>
 ```
 
 ## Example of usage:
