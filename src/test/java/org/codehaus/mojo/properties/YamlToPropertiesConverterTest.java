@@ -52,6 +52,7 @@ public class YamlToPropertiesConverterTest {
                 "    { nestedkey1: value1, nestedkey2: value2 }",
                 "list2:",
                 "   - map_key: map_value",
+                "empty_key:",
                 "...");
         FileUtils.writeLines(file, lines);
 
@@ -61,7 +62,7 @@ public class YamlToPropertiesConverterTest {
         final Properties properties = YamlToPropertiesConverter.convertToProperties(inputStream);
 
         // Assert
-        assertEquals("Six keys are expected", properties.keySet().size(), 7);
+        assertEquals("Eight keys are expected", properties.keySet().size(), 8);
 
         assertTrue(properties.keySet().contains("this.is.a.standard.property"));
         assertTrue(properties.getProperty("this.is.a.standard.property").equals("this is the value"));
@@ -80,6 +81,7 @@ public class YamlToPropertiesConverterTest {
         assertTrue(properties.getProperty("anotherkey.nestedkey2").equals("value2"));
         assertTrue(properties.keySet().contains("list2.map_key"));
         assertTrue(properties.getProperty("list2.map_key").equals("map_value"));
+        assertTrue(properties.getProperty("empty_key").equals(""));
     }
 
     @Test
