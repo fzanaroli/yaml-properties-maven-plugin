@@ -77,7 +77,7 @@ class YamlToPropertiesConverter {
                 toHierarchicalValue(dataMap,key,element);
             }
         } else {
-            dataMap.put(key, value);
+            dataMap.put(key, value == null ? "" : value);
         }
     }
 
@@ -109,7 +109,7 @@ class YamlToPropertiesConverter {
 
                 flattenedMap.put(key, stringBuilder.toString());
             } else {
-                flattenedMap.put(key, value);
+                flattenedMap.put(key, value == null ? "" : value);
             }
         }
 
