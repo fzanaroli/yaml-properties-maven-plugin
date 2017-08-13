@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.3] - 2017-08-13
+### Fixed
+- Fixed mapping of null values
+
 ## [1.1.2] - 2017-07-12
 ### Fixed
 - Issue 3 https://github.com/ozimov/yaml-properties-maven-plugin/issues/3
