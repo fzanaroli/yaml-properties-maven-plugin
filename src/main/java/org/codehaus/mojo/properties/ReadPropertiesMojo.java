@@ -26,17 +26,14 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.shared.model.fileset.FileSet;
+import org.apache.maven.shared.model.fileset.util.FileSetManager;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * The read-project-properties goal reads property files and URLs and stores the properties as project properties. It
@@ -52,6 +49,7 @@ public class ReadPropertiesMojo
         extends AbstractMojo {
 
     private static final ResourceType[] SUPPORTED_RESOURCE_TYPES = {ResourceType.PROPERTIES, ResourceType.YAML};
+
     /**
      * Used for resolving property placeholders.
      */
@@ -73,6 +71,20 @@ public class ReadPropertiesMojo
     /**
      * If the plugin should be quiet if any of the files was not found.
      */
+
+    /**
+     * A list of <code>fileSet</code> rules to select files and directories.
+     */
+    @Parameter
+    private FileSet[] filesets = new FileSet[0];
+
+    /**
+     * A specific <code>fileSet</code> rule to select files and directories.
+     */
+    @Parameter
+    private FileSet fileset;
+
+
     @Parameter(defaultValue = "false")
     private boolean quiet;
     /**
@@ -102,6 +114,8 @@ public class ReadPropertiesMojo
     public void execute()
             throws MojoExecutionException, MojoFailureException {
         checkParameters();
+
+        loadFileSets();
 
         loadFiles();
 
@@ -143,6 +157,54 @@ public class ReadPropertiesMojo
             load(new FileResource(file));
         }
     }
+
+
+    private void loadFileSets() throws MojoExecutionException {
+
+        FileSetManager fileSetManager = new FileSetManager();
+
+        if (filesets.length == 0) return;
+        getLog().info("Checking filesets :" + Arrays.asList(filesets).toString());
+
+        Set<File> filesetsItems = new TreeSet<File>(new ArrayList<File>(Arrays.asList(files)));
+        for (FileSet afileset : filesets) {
+            getLog().debug("Checking included fileset :" + afileset);
+            String dir = afileset.getDirectory();
+            getLog().info("Check files in directory :" + dir);
+
+            // add files from includedDirs
+            String[] includedFiles = fileSetManager.getIncludedFiles(afileset);
+            getLog().debug("included files :" + Arrays.asList(includedFiles).toString());
+            for (final String fileName : includedFiles) {
+                File file = new File(dir +fileName);
+                if (file.isDirectory()) {
+                    // do nothing : ignore subfolders
+                } else {
+                    getLog().debug("file " + file.getName() + " added !!!!!!!");
+                    filesetsItems.add(file);
+                }
+
+            }
+
+            // remove files from excludedDirs
+            getLog().debug("Checking excluded fileset :" + afileset);
+            String[] excludedFiles = fileSetManager.getExcludedFiles(afileset);
+            getLog().info("excluded files :" + Arrays.asList(excludedFiles).toString());
+            for (final String fileName : excludedFiles) {
+                File file = new File(dir +fileName);
+                if (file.isDirectory()) {
+                    // do nothing : ignore subfolders
+                } else {
+                    getLog().debug("file: " + file.getName() + " removed !!!!!!!");
+                    filesetsItems.remove(file);
+                }
+
+            }
+        }
+
+        files = filesetsItems.toArray(new File[filesetsItems.size()]);
+    }
+
 
     private void loadUrls()
             throws MojoExecutionException {

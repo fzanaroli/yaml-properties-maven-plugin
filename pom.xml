@@ -29,9 +29,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>it.ozimov</groupId>
+    <groupId>io.streamdata</groupId>
     <artifactId>yaml-properties-maven-plugin</artifactId>
-    <version>1.1.4-SNAPSHOT</version>
+    <version>1.1.4.RELEASE</version>
 
     <name>Yaml Properties Maven Plugin</name>
     <description>
@@ -39,11 +39,11 @@
         with properties. It provides goals to read and write properties from files.
     </description>
 
-    <inceptionYear>2009</inceptionYear>
+    <inceptionYear>2018</inceptionYear>
 
     <packaging>maven-plugin</packaging>
 
-    <url>https://github.com/ozimov/yaml-properties-maven-plugin</url>
+    <url>https://github.com/fzanaroli/yaml-properties-maven-plugin</url>
 
     <licenses>
         <license>
@@ -54,12 +54,12 @@
     </licenses>
 
     <prerequisites>
-        <maven>2.2.1</maven>
+        <maven>3.0.0</maven>
     </prerequisites>
 
     <properties>
-        <maven.api.version>2.2.1</maven.api.version>
-        <mojo.java.target>1.5</mojo.java.target>
+        <maven.api.version>3.0.0</maven.api.version>
+        <mojo.java.target>1.8</mojo.java.target>
 
         <nexus-staging-maven-plugin>1.6.6</nexus-staging-maven-plugin>
         <maven-source-plugin>2.4</maven-source-plugin>
@@ -69,41 +69,11 @@
         <maven-scm-plugin>1.9.4</maven-scm-plugin>
     </properties>
 
-
-    <scm>
-        <connection>scm:git:https://github.com/ozimov/yaml-properties-maven-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/ozimov/yaml-properties-maven-plugin.git</developerConnection>
-        <url>https://github.com/ozimov/yaml-properties-maven-plugin</url>
-    </scm>
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/ozimov/yaml-properties-maven-plugin/issues/</url>
-    </issueManagement>
-    <ciManagement>
-        <system>Travis-CI</system>
-        <url>https://travis-ci.org/ozimov/yaml-properties-maven-plugin</url>
-    </ciManagement>
-
-    <developers>
-        <developer>
-            <id>rtrunfio</id>
-            <name>Roberto Trunfio</name>
-            <email>roberto.trunfio@zalando.de</email>
-            <organization>Zalando SE</organization>
-            <organizationUrl>http://www.zalando.de</organizationUrl>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-    </developers>
-
-
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-model</artifactId>
-            <version>${maven.api.version}</version>
+            <version>3.2.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -112,7 +82,7 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-project</artifactId>
-            <version>${maven.api.version}</version>
+            <version>2.2.1</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
@@ -141,26 +111,31 @@
             <artifactId>maven-plugin-annotations</artifactId>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.maven.shared</groupId>
+            <artifactId>file-management</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
 
-
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>motwin-releases</id>
+            <name>motwin Releases</name>
+            <url>https://repository.streamdata.io/content/repositories/mootwin-releases</url>
         </repository>
+        <snapshotRepository>
+            <id>motwin-snapshots</id>
+            <name>motwin Snapshots</name>
+            <url>https://repository.streamdata.io/content/repositories/mootwin-snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.5</version>
+                    <version>3.0.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -197,7 +172,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions-maven-plugin}</version>
+                <version>2.1</version>
                 <configuration>
                     <generateBackupPoms>false</generateBackupPoms>
                 </configuration>
@@ -205,7 +180,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
-                <version>${maven-scm-plugin}</version>
+                <version>1.9.5</version>
                 <configuration>
                     <pushChanges>false</pushChanges>
                     <tag>${project.version}</tag>
@@ -225,7 +200,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin}</version>
+                        <version>2.10.4</version>
                         <configuration>
                             <additionalparam>-Xdoclint:none</additionalparam>
                             <includeDependencySources>true</includeDependencySources>
@@ -257,7 +232,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin}</version>
+                        <version>2.10.4</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -266,31 +241,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven-gpg-plugin}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${nexus-staging-maven-plugin}</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
