@@ -29,7 +29,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.streamdata</groupId>
+    <groupId>it.ozimov</groupId>
     <artifactId>yaml-properties-maven-plugin</artifactId>
     <version>1.1.4.RELEASE</version>
 
@@ -39,11 +39,11 @@
         with properties. It provides goals to read and write properties from files.
     </description>
 
-    <inceptionYear>2018</inceptionYear>
+    <inceptionYear>2009</inceptionYear>
 
     <packaging>maven-plugin</packaging>
 
-    <url>https://github.com/fzanaroli/yaml-properties-maven-plugin</url>
+    <url>https://github.com/ozimov/yaml-properties-maven-plugin</url>
 
     <licenses>
         <license>
@@ -58,84 +58,115 @@
     </prerequisites>
 
     <properties>
-        <maven.api.version>3.0.0</maven.api.version>
-        <mojo.java.target>1.8</mojo.java.target>
+        <mojo.java.target>1.5</mojo.java.target>
 
-        <nexus-staging-maven-plugin>1.6.6</nexus-staging-maven-plugin>
-        <maven-source-plugin>2.4</maven-source-plugin>
-        <maven-javadoc-plugin>2.10.3</maven-javadoc-plugin>
-        <maven-gpg-plugin>1.5</maven-gpg-plugin>
-        <versions-maven-plugin>2.2</versions-maven-plugin>
-        <maven-scm-plugin>1.9.4</maven-scm-plugin>
+        <maven-model.version>3.2.5</maven-model.version>
+        <maven-plugin-api.version>3.2.5</maven-plugin-api.version>
+        <maven.project.version>2.2.1</maven.project.version>
+        <nexus-staging-maven-plugin.version>1.6.6</nexus-staging-maven-plugin.version>
+        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
+        <maven-scm-plugin.version>1.9.5</maven-scm-plugin.version>
+        <maven-plugin-annotations.version>3.5</maven-plugin-annotations.version>
+        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+        <version-maven-plugin.version>2.1</version-maven-plugin.version>
+
+        <plexus-utils-version>3.0.22</plexus-utils-version>
+        <snakeyaml.version>1.17</snakeyaml.version>
+        <commons-io.version>2.4</commons-io.version>
+        <junit.version>4.12</junit.version>
+        <file-management.version>3.0.0</file-management.version>
     </properties>
+
+
+    <scm>
+        <connection>scm:git:https://github.com/ozimov/yaml-properties-maven-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/ozimov/yaml-properties-maven-plugin.git</developerConnection>
+        <url>https://github.com/ozimov/yaml-properties-maven-plugin</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/ozimov/yaml-properties-maven-plugin/issues/</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Travis-CI</system>
+        <url>https://travis-ci.org/ozimov/yaml-properties-maven-plugin</url>
+    </ciManagement>
+
+    <developers>
+        <developer>
+            <id>rtrunfio</id>
+            <name>Roberto Trunfio</name>
+            <email>roberto.trunfio@zalando.de</email>
+            <organization>Zalando SE</organization>
+            <organizationUrl>http://www.zalando.de</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
 
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-model</artifactId>
-            <version>3.2.5</version>
+            <version>${maven-model.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
+            <version>${maven-plugin-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-project</artifactId>
-            <version>2.2.1</version>
+            <version>${maven.project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
-            <version>3.0.22</version>
+            <version>${plexus-utils-version}</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.16</version>
+            <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <version>${commons-io.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- dependencies to annotations -->
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-annotations</artifactId>
+            <version>${maven-plugin-annotations.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.shared</groupId>
             <artifactId>file-management</artifactId>
-            <version>3.0.0</version>
+            <version>${file-management.version}</version>
         </dependency>
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>motwin-releases</id>
-            <name>motwin Releases</name>
-            <url>https://repository.streamdata.io/content/repositories/mootwin-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>motwin-snapshots</id>
-            <name>motwin Snapshots</name>
-            <url>https://repository.streamdata.io/content/repositories/mootwin-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>${maven-jar-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -172,7 +203,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>2.1</version>
+                <version>${version-maven-plugin.version}</version>
                 <configuration>
                     <generateBackupPoms>false</generateBackupPoms>
                 </configuration>
@@ -180,7 +211,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
-                <version>1.9.5</version>
+                <version>${maven-scm-plugin.version}</version>
                 <configuration>
                     <pushChanges>false</pushChanges>
                     <tag>${project.version}</tag>
@@ -200,7 +231,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.4</version>
+                        <version>${maven-javadoc-plugin.version}</version>
                         <configuration>
                             <additionalparam>-Xdoclint:none</additionalparam>
                             <includeDependencySources>true</includeDependencySources>
@@ -219,7 +250,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin}</version>
+                        <version>${maven-source-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -232,7 +263,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.4</version>
+                        <version>${maven-javadoc-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
