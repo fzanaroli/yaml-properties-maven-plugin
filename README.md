@@ -29,7 +29,9 @@ with:
 <version>1.1.3</version>
 ```
 
-## Example of usage:
+## Examples of usage:
+
+file list in extension:
 ```xml
 <plugin>
     <groupId>it.ozimov</groupId>
@@ -50,6 +52,29 @@ with:
     </executions>
 </plugin>
 ```
+filesets by directory content
+```xml
+<plugin>
+    <groupId>it.ozimov</groupId>
+    <artifactId>yaml-properties-maven-plugin</artifactId>
+    <version>LATES</version>
+    <executions>
+        <execution>
+            <phase>initialize</phase>
+            <goals>
+                <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+                <fileset>
+                    <directory>properties/</directory>
+                </fileset>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+
 And then usage in the pom as 
 ```xml
  <plugin>
