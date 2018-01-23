@@ -35,6 +35,26 @@ public class YamlToPropertiesConverterTest {
         file = folder.newFile("test.yml");
     }
 
+
+    @Test
+    public void testConvertTablesToProperties()
+            throws Exception {
+        // Arrange
+        final List<String> lines = Arrays.asList(
+                "b: [1,2,3]");
+        FileUtils.writeLines(file, lines);
+
+        final InputStream inputStream = new FileInputStream(file);
+
+        // Act
+        final Properties properties = YamlToPropertiesConverter.convertToProperties(inputStream);
+
+        assertTrue(properties.keySet().contains("b"));
+        assertTrue(properties.getProperty("b").equals("[1,2,3]"));
+
+    }
+
+
     @Test
     public void testConvertToProperties()
             throws Exception {
@@ -46,6 +66,7 @@ public class YamlToPropertiesConverterTest {
                 "   hierarchical:",
                 "       property1: yet another value",
                 "       property2: the last value",
+                "b: [1,2,3]",
                 "list:",
                 "   -list value1",
                 "   -list value2", "anotherkey:",
@@ -62,7 +83,7 @@ public class YamlToPropertiesConverterTest {
         final Properties properties = YamlToPropertiesConverter.convertToProperties(inputStream);
 
         // Assert
-        assertEquals("Eight keys are expected", properties.keySet().size(), 8);
+        assertEquals("Nine keys are expected", properties.keySet().size(), 9);
 
         assertTrue(properties.keySet().contains("this.is.a.standard.property"));
         assertTrue(properties.getProperty("this.is.a.standard.property").equals("this is the value"));
@@ -74,6 +95,9 @@ public class YamlToPropertiesConverterTest {
 
         assertTrue(properties.keySet().contains("list"));
         assertTrue(properties.getProperty("list").equals("-list value1 -list value2"));
+
+        assertTrue(properties.keySet().contains("b"));
+        assertTrue(properties.getProperty("b").equals("[1,2,3]"));
 
         assertTrue(properties.keySet().contains("anotherkey.nestedkey1"));
         assertTrue(properties.getProperty("anotherkey.nestedkey1").equals("value1"));

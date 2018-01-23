@@ -12,6 +12,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Properties;
 
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
 /**
  * Converts a yaml file into a properties.
  */
@@ -73,12 +76,21 @@ class YamlToPropertiesConverter {
         if (value instanceof Map) {
             dataMap.put(key, toHierarchicalMap(value));
         } else if (value instanceof Collection) {
-            for (final Object element : ((Collection) value)) {
+            if (((Collection) value).stream().filter(elem -> elem instanceof Map).count() >0) {
+                for (final Object element : ((Collection) value)) {
                 toHierarchicalValue(dataMap,key,element);
+                }
+            } else {
+                String strValue = (String) ((Collection) value).stream().map(elem -> elem.toString()).collect(joining(","));
+                toHierarchicalValue(dataMap,key,table(strValue));
             }
         } else {
             dataMap.put(key, value == null ? "" : value);
         }
+    }
+
+    private static String table(String strValue) {
+        return "[" + strValue + "]";
     }
 
     private static Map<String, Object> toFlatMap(final Map<String, Object> source) {
